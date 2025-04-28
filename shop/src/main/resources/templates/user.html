@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--доп прописываем подключение thymeleaf-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Кабинет пользователя</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+<div th:replace="layouts/header :: header"></div>
+<main class="container">
+    <h1>Кабинет пользователя</h1>
+<!--    вывод логина-->
+    <p>Привет, <span sec:authentication="name"/></p>
+    <!--    если на этой же странице, то action можно не прописывать-->
+    <form method="post" th:action="@{/logout}">
+        <button type="submit">Выйти</button>
+        <!--        submit страница будет перезагружена и отправка данные на сервер-->
+    </form>
+    <form th:action="@{/user/update}" method="post" name="userForm">
+        <br><h3>Изменить данные</h3>
+        <input type="email" name="email" th:value="${email}">
+        <input type="password" name="password" placeholder="Введите пароль">
+        <br><select id="roles" name="roles">
+        <option value="USER">Пользователь</option>
+        <option value="ADMIN">Администратор</option>
+        <option value="REDACTOR">Редактор</option>
+        </select>
+        <br><button type="submit">Обновить данные</button>
+    </form>
+</main>
+<div th:replace="layouts/footer :: footer"></div>
+</body>
+</html>

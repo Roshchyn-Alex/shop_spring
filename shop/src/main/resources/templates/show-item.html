@@ -1,0 +1,34 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${item.title}" />
+    <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+<div th:replace="layouts/header :: header"></div>
+<main class="container">
+    <div class="items">
+        <div>
+            <img th:src="${item.image}" th:alt="${item.title}">
+            <h3 th:text="${item.title}" />
+            <p th:text="${item.info}" /><br>
+<!--            добавляем автора к товару -->
+<!--            обращ к класу Item, в нем поле user, а потом username в классе User-->
+            <p>Автор: <b th:text="${item.user.username}"/></p>
+            <span th:text="${item.price} + '$'" />
+        </div>
+    </div>
+<!--    ссылка на редактирование товара-->
+<!--    sec:authorize="hasAuthority('REDACTOR') авторизован ли и какая роль, какие кнопки будет видеть-->
+    <a th:href="'/item/' + ${item.id} + '/update'" class="edit-btn" sec:authorize="hasAuthority('REDACTOR') || hasAuthority('ADMIN')">Редактировать</a>
+<!--   кнопка удаления через форму, так как при нажатии отправляем на сервер и удаляем-->
+<!--    есть метод delete-->
+<!--    th:action перенаправляем на страницу, ${item.id} - id текущ эл-та-->
+    <form method="post" th:action="@{'/item/' + ${item.id} + '/delete'}">
+        <button type="submit" sec:authorize="hasAuthority('ADMIN')">Удалить</button>
+    </form>
+</main>
+<div th:replace="layouts/footer :: footer"></div>
+</body>
+</html>

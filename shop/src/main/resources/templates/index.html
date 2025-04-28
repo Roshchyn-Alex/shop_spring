@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--доп прописываем подключение thymeleaf-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+<!--  подключаем повторяющ код из header-->
+<!--replace - заменяет вместо этого div, insert- вставляет в этот div-->
+    <div th:replace="layouts/header :: header"></div>
+    <div class="presentation">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB67XGZYe0J6fUvrLMDHYBlh_Ky912GqkaaA&s" alt="Магазин">
+        <h2>Хочешь выглядеть стильно?</h2>
+        <p>Крутые вещи для тебя</p>
+    </div>
+    <main class="container">
+<!--        вывод данных-->
+<!--        добавл условие, если массив не  пустой-->
+        <div class="items" th:if="${!items.isEmpty()}">
+<!--            прописываем цикл-->
+            <div th:each="el : ${items}">
+<!--                выводим все элементы, например изображение название-->
+                <a th:href="'/item/' + ${el.id}"><img th:src="${el.image}" th:alt="${el.title}"></a>
+                <h3 th:text="${el.title}" />
+                <p th:text="${el.info}" />
+                <span th:text="${el.price} + '$'" />
+            </div>
+        </div>
+        <div th:if="${items.isEmpty()}" class="block">
+            <p>Нет товаров</p>
+        </div>
+    </main>
+<div th:replace="layouts/footer :: footer"></div>
+</body>
+</html>

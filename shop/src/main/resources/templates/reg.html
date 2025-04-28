@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--доп прописываем подключение thymeleaf-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+<div th:replace="layouts/header :: header"></div>
+<main class="container">
+    <h1>Регистрация</h1>
+    <!--    если на этой же странице, то action можно не прописывать-->
+    <form method="post" th:action="@{/reg}">
+        <input type="text" name="username" placeholder="Введите логин">
+        <input type="email" name="email" placeholder="Введите email">
+        <input type="password" name="password" placeholder="Введите пароль">
+<!--        если пользоват сущ, то будет выводиться ошибка-->
+        <div th:text="${error}" style="color: red" />
+        <button type="submit">Зарегистрироваться</button>
+        <!--        submit страница будет перезагружена и отправка данные на сервер-->
+    </form>
+</main>
+<div th:replace="layouts/footer :: footer"></div>
+</body>
+</html>

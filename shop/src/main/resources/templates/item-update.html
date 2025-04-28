@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--доп прописываем подключение thymeleaf-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить товар</title>
+    <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+<!--  подключаем повторяющ код из header-->
+<!--replace - заменяет вместо этого div, insert- вставляет в этот div-->
+<div th:replace="layouts/header :: header"></div>
+<main class="container">
+    <h1>Изменить товар</h1>
+    <!--    если на этой же странице, то action можно не прописывать-->
+    <form method="post" th:action="@{'/item/' + ${item.id} + '/update'}">
+<!--        устанавиливаем занчения из данных th:value-->
+        <input type="text" name="title" th:value="${item.title}" placeholder="Введите название">
+        <input type="text" name="image" th:value="${item.image}" placeholder="Введите URL фото">
+        <input type="number" name="price" th:value="${item.price}" placeholder="Введите стоимость">
+<!--        для textarea подставляем th:text-->
+        <textarea name="info" placeholder="Введите описание" th:text="${item.info}"></textarea>
+        <button type="submit">Изменить</button>
+        <!--        submit страница б перезагруж и отправляет данные на сервер-->
+    </form>
+</main>
+<div th:replace="layouts/footer :: footer"></div>
+</body>
+</html>
